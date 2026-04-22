@@ -1,107 +1,165 @@
 # 🚀 Unified Stock Data Platform
 
 ## 📌 Overview
-Production-ready multi-service platform to ingest, process, and serve stock data. Built with a DevOps-first mindset: containerization, reverse proxying, and CI/CD.
+Unified Stock Data Platform is a production-ready, multi-service system designed to aggregate, process, and serve stock market data efficiently. The project follows modern DevOps practices including containerization, reverse proxy architecture, and CI/CD automation.
 
 ---
 
 ## 🏗️ Architecture
 
-Client → Nginx → Services (Node/Python APIs) → MySQL
+```
+Client → Nginx → Frontend (Next.js)
                 ↓
-            Docker Compose
+         Backend (Node.js API)
                 ↓
-             AWS EC2
+         FastAPI (Python Service)
+                ↓
+              MySQL
+                ↓
+         Docker Compose (Orchestration)
+                ↓
+             AWS EC2 (Deployment)
+```
 
 ---
 
 ## 📁 Repository Structure
 
-- backend/ → API services (Node/Python)
-- frontend/ → UI (if applicable)
-- mysql/ → DB init / configs
-- python/ → data processing / jobs
-- docker-compose.yml → orchestration
-- nginx/ → reverse proxy config
+```
+backend/        # Node.js API
+frontend/       # Next.js frontend
+python/         # FastAPI service
+mysql/          # Database configs/init
+nginx/          # Reverse proxy config
+
+docker-compose.yml
+.github/workflows/   # CI pipeline
+README.md
+```
 
 ---
 
 ## ⚙️ Tech Stack
 
-- Node.js / Python
+### Backend
+- Node.js (Express)
+- FastAPI (Python)
+
+### Frontend
+- Next.js
+
+### Database
 - MySQL
-- Docker, Docker Compose
-- Nginx
+
+### DevOps
+- Docker & Docker Compose
+- Nginx (Reverse Proxy)
+- GitHub Actions (CI)
 - AWS EC2
-- GitHub Actions (CI/CD)
 
 ---
 
-## 🚀 Features
+## 🚀 Key Features
 
-- Multi-service architecture
-- Containerized deployment
-- Reverse proxy routing via Nginx
-- Environment-based configs
-- Ready for CI/CD integration
+- Multi-service microservice-like architecture
+- Containerized deployment using Docker
+- Reverse proxy routing using Nginx
+- Healthcheck-based service dependency handling
+- CI pipeline with GitHub Actions
+- Environment-based configuration
 
 ---
 
 ## 🐳 Run Locally
 
 ```bash
-docker-compose up --build
+docker compose up --build
+```
+
+Application will be available at:
+```
+http://localhost
 ```
 
 ---
 
-## 🔐 Environment Variables
+## 🔐 Environment Configuration
 
-Create `.env`:
+Create a `.env` file in each service:
 
+### Backend (.env)
 ```
-DB_HOST=localhost
-DB_USER=root
-DB_PASSWORD=yourpassword
-API_KEY=your_api_key
+DB_HOST=mysql
+DB_USER=vap_user
+DB_PASSWORD=vap_pass
 ```
+
+### Python (.env)
+```
+DB_HOST=mysql
+```
+
+⚠️ Never commit `.env` files to GitHub.
 
 ---
 
-## ☁️ Deployment (AWS)
+## ☁️ Deployment (AWS EC2)
 
-- EC2 instances (t2.micro / t3.small)
+- Instance Type: t2.micro / t3.small
 - Dockerized services
-- Nginx reverse proxy
-- Ports 80/443 exposed
+- Nginx exposed on port 80
+
+### Deployment Steps
+
+```bash
+git clone https://github.com/bharat-musale/Unified-Stock-Data-Platform.git
+cd Unified-Stock-Data-Platform
+docker compose up -d --build
+```
 
 ---
 
-## 🔄 CI/CD (Planned)
+## 🔄 CI Pipeline (GitHub Actions)
 
-- GitHub Actions
-- Auto build & deploy on push
+Triggered on push to `main`:
+
+- Checkout repository
+- Build Docker services
+- Validate container setup
+
+File:
+```
+.github/workflows/docker-ci.yml
+```
 
 ---
 
 ## 🧠 DevOps Highlights
 
-- Multi-container orchestration
-- Reverse proxy architecture
-- Cloud deployment (AWS EC2)
-- Environment isolation
+- Multi-container orchestration using Docker Compose
+- Reverse proxy architecture with Nginx
+- CI integration using GitHub Actions
+- Service dependency handling via healthchecks
+- Clean environment separation
 
 ---
 
-## 📈 Improvements Roadmap
+## 📈 Future Enhancements
 
-- Kubernetes deployment
-- Redis caching
+- CI/CD with auto-deploy to EC2
+- HTTPS with Nginx + SSL
 - Monitoring (Prometheus + Grafana)
-- Load balancing
+- Redis caching layer
+- Kubernetes migration
 
 ---
 
 ## 📫 Contact
 
 - GitHub: https://github.com/bharat-musale
+
+---
+
+## ⭐ Note
+
+This project demonstrates real-world DevOps practices including containerization, CI integration, and scalable architecture design, aimed at production-level deployment scenarios.
